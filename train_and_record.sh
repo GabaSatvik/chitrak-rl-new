@@ -9,11 +9,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ISAACLAB_DIR="${ISAACLAB_PATH:-$(cd "$SCRIPT_DIR/../IsaacLab" && pwd)}"
 # EXPERIMENT selects which logs/rsl_rl/<experiment> dir to watch -- must match
-# the PPO cfg's experiment_name for the chosen TASK (chitrak_flat for the walk
+# the PPO cfg's experiment_name for the chosen TASK (chitrak_walk for the walk
 # task, chitrak_stand for the stand task). RECORD_TASK is the Play task the
 # video watcher rolls checkpoints out with (defaults to the training TASK's
 # Play variant).
 EXPERIMENT="${EXPERIMENT:-chitrak_walk}"
+
 LOG_ROOT="$ISAACLAB_DIR/logs/rsl_rl/$EXPERIMENT"
 TASK="${TASK:-Isaac-Velocity-Flat-Chitrak-Walk-v0}"
 # The comment above used to claim RECORD_TASK "defaults to the training TASK's

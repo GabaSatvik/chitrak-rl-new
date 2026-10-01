@@ -30,6 +30,11 @@ imageio==2.37.0
 imageio-ffmpeg
 
 # --- logging ---------------------------------------------------------------
+# 0.28.0 is the version verified on the source machine (MIGRATION.md §3).
+# 0.26.x has a regression in the run-state handshake — the "state: crashed"
+# symptom (README §4) is worse on 0.26.x than on 0.28.x.
+# NOTE: stable-baselines3 (pulled transitively by isaaclab_tasks) warns about
+# needing torch >= 2.8; this is harmless — RSL-RL does not use sb3.
 wandb==0.28.0
 
 # torch is installed transitively by isaacsim-core as 2.7.0+cu128.

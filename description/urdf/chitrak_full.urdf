@@ -28,7 +28,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/torso_link.STL" />
+          filename="../meshes/torso_link.STL" />
       </geometry>
       <material
         name="">
@@ -42,7 +42,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/torso_link.STL" />
+          filename="../meshes/torso_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -73,7 +73,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fr_hip_link.STL" />
+          filename="../meshes/fr_hip_link.STL" />
       </geometry>
       <material
         name="">
@@ -87,7 +87,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fr_hip_link.STL" />
+          filename="../meshes/fr_hip_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -131,7 +131,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fr_thigh_link.STL" />
+          filename="../meshes/fr_thigh_link.STL" />
       </geometry>
       <material
         name="">
@@ -145,7 +145,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fr_thigh_link.STL" />
+          filename="../meshes/fr_thigh_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -189,7 +189,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fr_calf_link.STL" />
+          filename="../meshes/fr_calf_link.STL" />
       </geometry>
       <material
         name="">
@@ -203,7 +203,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fr_calf_link.STL" />
+          filename="../meshes/fr_calf_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -247,7 +247,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fl_hip_link.STL" />
+          filename="../meshes/fl_hip_link.STL" />
       </geometry>
       <material
         name="">
@@ -261,7 +261,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fl_hip_link.STL" />
+          filename="../meshes/fl_hip_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -305,7 +305,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fl_thigh_link.STL" />
+          filename="../meshes/fl_thigh_link.STL" />
       </geometry>
       <material
         name="">
@@ -319,7 +319,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fl_thigh_link.STL" />
+          filename="../meshes/fl_thigh_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -363,7 +363,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fl_calf_link.STL" />
+          filename="../meshes/fl_calf_link.STL" />
       </geometry>
       <material
         name="">
@@ -377,7 +377,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/fl_calf_link.STL" />
+          filename="../meshes/fl_calf_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -421,7 +421,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/br_hip_link.STL" />
+          filename="../meshes/br_hip_link.STL" />
       </geometry>
       <material
         name="">
@@ -435,7 +435,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/br_hip_link.STL" />
+          filename="../meshes/br_hip_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -479,7 +479,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/br_thigh_link.STL" />
+          filename="../meshes/br_thigh_link.STL" />
       </geometry>
       <material
         name="">
@@ -493,7 +493,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/br_thigh_link.STL" />
+          filename="../meshes/br_thigh_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -537,7 +537,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/br_calf_link.STL" />
+          filename="../meshes/br_calf_link.STL" />
       </geometry>
       <material
         name="">
@@ -551,7 +551,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/br_calf_link.STL" />
+          filename="../meshes/br_calf_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -595,7 +595,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/bl_hip_link.STL" />
+          filename="../meshes/bl_hip_link.STL" />
       </geometry>
       <material
         name="">
@@ -609,7 +609,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/bl_hip_link.STL" />
+          filename="../meshes/bl_hip_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -653,7 +653,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/bl_thigh_link.STL" />
+          filename="../meshes/bl_thigh_link.STL" />
       </geometry>
       <material
         name="">
@@ -667,7 +667,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/bl_thigh_link.STL" />
+          filename="../meshes/bl_thigh_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -711,7 +711,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/bl_calf_link.STL" />
+          filename="../meshes/bl_calf_link.STL" />
       </geometry>
       <material
         name="">
@@ -725,7 +725,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="/teamspace/studios/this_studio/chitrak/chitrak_description/meshes/bl_calf_link.STL" />
+          filename="../meshes/bl_calf_link.STL" />
       </geometry>
     </collision>
   </link>

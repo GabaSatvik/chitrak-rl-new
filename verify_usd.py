@@ -10,6 +10,7 @@ init pose leaves every foot exactly on the ground. Run after any re-conversion:
 """
 
 import argparse
+from pathlib import Path
 
 from isaaclab.app import AppLauncher
 
