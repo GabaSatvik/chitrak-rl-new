@@ -6,10 +6,11 @@
 # Isaac Lab itself is NOT here — it is a git clone + editable install, see README §2.
 
 # --- simulator -------------------------------------------------------------
-# Pulls in ~40 isaacsim-* subpackages and pins torch to 2.7.0+cu128.
-# The [extscache] extra pre-bakes the Omniverse extension cache; without it the
-# first launch spends ~10 minutes downloading extensions.
-isaacsim[all,extscache]==5.1.0
+# extscache is omitted here to save ~5-8 GB of disk space.
+# Without it, the FIRST Isaac Sim launch downloads extensions (~10 min) —
+# subsequent launches are fast. Add [all,extscache] back if disk >= 80 GB.
+isaacsim[all]==5.1.0
+
 
 # --- RL --------------------------------------------------------------------
 # 3.0.1 is the version the local Isaac Lab patch in README §2.3 matches.
