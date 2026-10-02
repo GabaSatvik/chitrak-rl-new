@@ -30,10 +30,11 @@ imageio==2.37.0
 imageio-ffmpeg
 
 # --- logging ---------------------------------------------------------------
-# 0.26.2 is the highest version compatible with isaacsim-kernel 5.1.0.0's
-# hard pin on click==8.1.7. wandb>=0.27.0 requires click>=8.2.0 which
-# conflicts. Do NOT upgrade wandb without first upgrading isaacsim.
-wandb==0.26.2
+# 0.26.1 is the latest 0.26.x release on PyPI (0.26.2 does not exist).
+# Must stay on 0.26.x: wandb>=0.27.0 requires click>=8.2.0 which conflicts
+# with isaacsim-kernel 5.1.0.0's hard pin on click==8.1.7.
+# Do NOT upgrade wandb without first upgrading isaacsim.
+wandb==0.26.1
 
 
 # torch is installed transitively by isaacsim-core as 2.7.0+cu128.
