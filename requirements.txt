@@ -15,6 +15,7 @@ isaacsim[all,extscache]==5.1.0
 # 3.0.1 is the version the local Isaac Lab patch in README §2.3 matches.
 rsl-rl-lib==3.0.1
 gymnasium==1.2.1
+prettytable>=3.0.0
 
 # --- numerics --------------------------------------------------------------
 # numpy MUST stay <2 — isaacsim 5.1.0 is built against the 1.x ABI.
