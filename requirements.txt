@@ -13,6 +13,7 @@ isaacsim[all,extscache]==5.1.0
 
 # --- RL --------------------------------------------------------------------
 # 3.0.1 is the version the local Isaac Lab patch in README §2.3 matches.
+setuptools<=80.10.2
 rsl-rl-lib==3.0.1
 gymnasium==1.2.1
 prettytable>=3.0.0
