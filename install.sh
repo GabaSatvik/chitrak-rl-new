@@ -72,10 +72,10 @@ if [[ -n "${VIRTUAL_ENV:-}" ]] && [[ -f "$VIRTUAL_ENV/bin/activate" ]]; then
 fi
 
 # ---------------------------------------------------------------- 3. Build toolchain & GPU Check
-info "Upgrading pip, setuptools (pinned for pkg_resources compatibility), and wheel"
+info "Upgrading pip, setuptools (pinned to <70 for pkg_resources compatibility), and wheel"
 pip install --upgrade pip wheel
-pip install "setuptools<80" --force-reinstall
-pip install "flatdict>=4.1.0"
+pip install "setuptools<70" --force-reinstall
+pip install --no-build-isolation "flatdict==4.0.1"
 
 command -v nvidia-smi >/dev/null || die "nvidia-smi not found — no NVIDIA driver visible."
 GPU_NAME="$(nvidia-smi --query-gpu=name --format=csv,noheader | head -1)"
