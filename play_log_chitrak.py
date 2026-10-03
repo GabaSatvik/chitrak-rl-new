@@ -28,11 +28,16 @@ from rsl_rl.runners import OnPolicyRunner
 
 import importlib.metadata as metadata
 
-from isaaclab_rl.rsl_rl import (
-    RslRlVecEnvWrapper,
-    handle_deprecated_rsl_rl_checkpoint,
-    handle_deprecated_rsl_rl_cfg,
-)
+try:
+    from isaaclab_rl.rsl_rl import (
+        RslRlVecEnvWrapper,
+        handle_deprecated_rsl_rl_checkpoint,
+        handle_deprecated_rsl_rl_cfg,
+    )
+except ImportError:
+    from isaaclab_rl.rsl_rl import RslRlVecEnvWrapper
+    handle_deprecated_rsl_rl_checkpoint = lambda ckpt, ver: ckpt
+    handle_deprecated_rsl_rl_cfg = lambda cfg, ver: cfg
 from isaaclab_tasks.utils.parse_cfg import load_cfg_from_registry
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
