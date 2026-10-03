@@ -54,6 +54,14 @@ if [[ -z "${VIRTUAL_ENV:-}${CONDA_PREFIX:-}" ]]; then
     python3.11 -m venv "$VENV_DIR"
   elif command -v python3 >/dev/null 2>&1 && [[ "$(python3 -c 'import sys; print("%d.%d"%sys.version_info[:2])')" == "3.11" ]]; then
     python3 -m venv "$VENV_DIR"
+  elif command -v apt-get >/dev/null 2>&1; then
+    info "Python 3.11 not found — installing automatically via apt..."
+    $SUDO apt-get update -qq || true
+    $SUDO apt-get install -y -qq software-properties-common || true
+    $SUDO add-apt-repository -y ppa:deadsnakes/ppa || true
+    $SUDO apt-get update -qq || true
+    $SUDO apt-get install -y -qq python3.11 python3.11-venv python3.11-dev || true
+    python3.11 -m venv "$VENV_DIR"
   else
     die "Python 3.11 is required. Please install python3.11 & python3.11-venv first."
   fi
