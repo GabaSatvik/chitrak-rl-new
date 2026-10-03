@@ -91,12 +91,6 @@ fi
 info "Installing Python dependencies (Isaac Sim, rsl-rl, mujoco, etc.)"
 pip install -r "$REPO/requirements.txt" --extra-index-url https://pypi.nvidia.com
 
-# If RTX 50-series, ensure PyTorch with CUDA 12.8 (cu128) nightly is installed for sm_120
-if [[ "$IS_BLACKWELL" -eq 1 ]]; then
-  info "Installing PyTorch nightly (cu128) with native sm_120 support for RTX 50-series"
-  pip install --upgrade --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
-fi
-
 # ---------------------------------------------------------------- 5. Isaac Lab Clone & Editable Install
 if [[ -d "$ISAACLAB_DIR/.git" ]]; then
   info "Isaac Lab already present at $ISAACLAB_DIR — skipping clone"
@@ -131,11 +125,19 @@ else
   echo "  Already patched (or pattern not present)"
 fi
 
-# ---------------------------------------------------------------- 7. Clean stale locks & Verify
+# ---------------------------------------------------------------- 7. RTX 50-series (Blackwell / sm_120) Native PyTorch
+# Must run AFTER all pip installs so that neither requirements nor Isaac Lab downgrades torch
+if [[ "$IS_BLACKWELL" -eq 1 ]]; then
+  info "Ensuring native sm_120 (Blackwell) PyTorch for $GPU_NAME"
+  pip install --upgrade --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 || \
+  pip install --upgrade --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
+fi
+
+# ---------------------------------------------------------------- 8. Clean stale locks & Verify
 rm -f "$HOME/.cache/ov/_cache.lock" /root/.cache/ov/_cache.lock 2>/dev/null || true
 
 info "Verifying PyTorch CUDA execution"
-python -c "import torch; assert torch.cuda.is_available(), 'torch cannot see GPU'; x = torch.ones(5, device='cuda'); assert (x+1).sum().item() == 10.0; print('  CUDA Tensor computation: OK on', torch.cuda.get_device_name(0))"
+python -c "import torch; assert torch.cuda.is_available(), 'torch cannot see GPU'; x = torch.zeros(10, device='cuda', dtype=torch.long); assert (x+1).sum().item() == 10; print('  CUDA Tensor computation: OK on', torch.cuda.get_device_name(0), 'Capability:', torch.cuda.get_device_capability(0))"
 
 cat <<EOF
 
