@@ -6,9 +6,7 @@
 # Isaac Lab itself is NOT here — it is a git clone + editable install, see README §2.
 
 # --- simulator -------------------------------------------------------------
-# extscache is REQUIRED — it provides omni.kit.usd and other Python modules
-# that Isaac Sim imports at startup. Without it the sim crashes immediately.
-# Needs ≥ 80 GB disk on the container (set the Disk field when renting on Vast.ai).
+flatdict>=4.1.0
 isaacsim[all,extscache]==5.1.0
 
 # --- RL --------------------------------------------------------------------

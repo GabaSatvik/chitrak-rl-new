@@ -73,8 +73,9 @@ fi
 
 # ---------------------------------------------------------------- 3. Build toolchain & GPU Check
 info "Upgrading pip, setuptools (pinned for pkg_resources compatibility), and wheel"
-pip install --upgrade pip "setuptools<=80.10.2" wheel
-pip install --no-build-isolation flatdict
+pip install --upgrade pip wheel
+pip install "setuptools<80" --force-reinstall
+pip install "flatdict>=4.1.0"
 
 command -v nvidia-smi >/dev/null || die "nvidia-smi not found — no NVIDIA driver visible."
 GPU_NAME="$(nvidia-smi --query-gpu=name --format=csv,noheader | head -1)"
