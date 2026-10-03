@@ -81,7 +81,7 @@ class ChitrakWalkV2EnvCfg(ChitrakFlatEnvCfg):
         # at 10-15 s; Chitrak is 1.3 kg vs 15 kg, so the same impulse is
         # ~11x larger in v/m terms — keep the lower end to avoid constant falls.
         self.events.push_robot = EventTerm(
-            func=base_mdp.push_robot,
+            func=base_mdp.push_by_setting_velocity,
             mode="interval",
             interval_range_s=(10.0, 15.0),
             params={
@@ -96,11 +96,12 @@ class ChitrakWalkV2EnvCfg(ChitrakFlatEnvCfg):
         # Tighter than Go2's ±1-3 kg (which is ±7-20% of 15 kg) to keep the
         # physics grounded -- we are already light-footed.
         self.events.add_base_mass = EventTerm(
-            func=base_mdp.add_body_mass,
+            func=base_mdp.randomize_rigid_body_mass,
             mode="startup",
             params={
                 "asset_cfg": SceneEntityCfg("robot", body_names="base_link"),
                 "mass_distribution_params": (-0.5, 0.5),
+                "operation": "add",
             },
         )
 
