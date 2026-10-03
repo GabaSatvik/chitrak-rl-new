@@ -207,3 +207,38 @@ class ChitrakWalkPPORunnerCfg(ChitrakStandPPORunnerCfg):
         # changed, so it is a genuinely new test.
         self.policy.init_noise_std = 1.0
         self.algorithm.entropy_coef = 0.01
+
+
+@configclass
+class ChitrakWalkV2PPORunnerCfg(ChitrakWalkPPORunnerCfg):
+    """Improved walk runner: domain randomization + foot clearance + full commands.
+
+    Exploration settings vs baseline:
+        init_noise_std  1.0  →  0.4  (same joint-space dither +-0.05 rad at
+                                       action_scale=0.125 -- but DR's push_robot
+                                       adds its own destabilisation, so we stay
+                                       conservative on the noise side).
+        entropy_coef    0.01 →  0.01 (unchanged -- worked in the baseline)
+
+    Longer run (1500 iters) because:
+        - Omnidirectional command space is harder to cover than forward-only.
+        - DR needs more iterations for the policy to generalise across
+          randomised masses and pushes.
+        - kc curriculum reaches full strength only at ~640 iters; training
+          should continue well past that point.
+    """
+    def __post_init__(self):
+        super().__post_init__()
+
+        self.max_iterations  = 1500
+        self.experiment_name = "chitrak_walk_v2"
+        self.save_interval   = 50
+
+        # Conservative exploration: DR (pushes + mass randomisation) already
+        # destabilises the policy without needing large init_noise. The sweet
+        # spot from the baseline sweep was 0.4 at action_scale=0.125; we keep
+        # that here while raising action_scale back to 0.25, so the effective
+        # joint dither is +-0.4*0.25=+-0.10 rad -- still below the +-0.25 rad
+        # that caused 100% falls in the earliest runs.
+        self.policy.init_noise_std = 0.4
+        self.algorithm.entropy_coef = 0.01
