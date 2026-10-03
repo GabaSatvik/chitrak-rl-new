@@ -149,32 +149,12 @@ class ChitrakWalkV2EnvCfg(ChitrakFlatEnvCfg):
         self.rewards.track_lin_vel_xy_exp.params["std"] = 0.15
         self.rewards.track_ang_vel_z_exp.params["std"]  = 0.25
 
-        # feet_air_time threshold — same as baseline (0.05 s)
+        # feet_air_time: reward foot lifting during trot
+        self.rewards.feet_air_time.weight = 0.5
         self.rewards.feet_air_time.params["threshold"] = 0.05
 
-        # ── NEW: foot clearance ───────────────────────────────────────────
-        # Pays each foot in swing for being ≥ 4 cm above the ground.
-        # Weight 0.5 — larger than feet_air_time (0.25) because this is the
-        # primary term that forces real swing phase. The baseline's shuffle
-        # (91-95% duty) costs nothing under feet_air_time alone.
-        self.rewards.foot_clearance = RewTerm(
-            func=foot_clearance_reward,
-            weight=0.5,
-            params={
-                "sensor_cfg": SceneEntityCfg(
-                    "contact_forces", body_names=".*_calf_link"
-                ),
-                "asset_cfg": SceneEntityCfg(
-                    "robot", body_names=".*_calf_link"
-                ),
-                "target_clearance": 0.04,  # 4 cm — conservative for a 23 cm tall robot
-                "std": 0.02,               # reward falls to 37% at ±2 cm from target
-            },
-        )
-
-        # ── NEW: hip-roll L1 penalty ──────────────────────────────────────
-        # Lighter than the stand task (-0.5) because walk/turn needs
-        # hip-roll authority. -0.3 suppresses the drift without pinning it.
+        # ── hip-roll L1 penalty ───────────────────────────────────────────
+        # Suppresses outwards/inwards hip drift and keeps legs symmetric
         self.rewards.hip_roll_deviation_l1 = RewTerm(
             func=hip_roll_deviation_l1,
             weight=-0.3,
@@ -196,9 +176,11 @@ class ChitrakWalkV2EnvCfg(ChitrakFlatEnvCfg):
         self.commands.base_velocity.ranges.ang_vel_z = (-ANG_VEL_Z, ANG_VEL_Z)
 
         # ═══════════════════════════════════════════════════════════════════
-        # 7. ACTUATOR + NUMERICS (unchanged from baseline)
+        # 7. ACTUATOR + NUMERICS (tuned for 1.3 kg lightweight Chitrak)
         # ═══════════════════════════════════════════════════════════════════
-        self.actions.joint_pos.scale = 0.25
+        # action_scale 0.125 (halved from Go2's 0.25): prevents torque saturation
+        # and joint excursions that cause leg buckling or face-planting.
+        self.actions.joint_pos.scale = 0.125
         self.scene.robot.spawn.articulation_props.solver_position_iteration_count = 8
         self.scene.robot.actuators["base_legs"].damping = 0.05
 
