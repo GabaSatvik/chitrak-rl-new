@@ -23,10 +23,11 @@ info() { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
 warn() { printf '\n\033[1;33mWARN: %s\033[0m\n' "$*"; }
 die()  { printf '\n\033[1;31mERROR: %s\033[0m\n' "$*" >&2; exit 1; }
 
+SUDO=""
+[[ "${EUID:-$(id -u)}" -ne 0 ]] && command -v sudo >/dev/null 2>&1 && SUDO="sudo"
+
 # ---------------------------------------------------------------- 1. System packages & Vulkan
 if command -v apt-get >/dev/null 2>&1; then
-  SUDO=""
-  [[ "${EUID:-$(id -u)}" -ne 0 ]] && command -v sudo >/dev/null 2>&1 && SUDO="sudo"
   if [[ "${EUID:-$(id -u)}" -eq 0 ]] || [[ -n "$SUDO" ]]; then
     info "Installing required system packages (libglu1-mesa, vulkan-tools)"
     $SUDO apt-get update -qq || true
@@ -47,24 +48,40 @@ if command -v apt-get >/dev/null 2>&1; then
 fi
 
 # ---------------------------------------------------------------- 2. Python 3.11 Venv
-if [[ -z "${VIRTUAL_ENV:-}${CONDA_PREFIX:-}" ]]; then
+is_py311() {
+  command -v python >/dev/null 2>&1 && [[ "$(python -c 'import sys; print("%d.%d"%sys.version_info[:2])' 2>/dev/null)" == "3.11" ]]
+}
+
+if ! is_py311; then
   VENV_DIR="$HOME/venvs/isaaclab"
-  info "No virtual environment active. Setting up venv at $VENV_DIR"
-  if command -v python3.11 >/dev/null 2>&1; then
-    python3.11 -m venv "$VENV_DIR"
-  elif command -v python3 >/dev/null 2>&1 && [[ "$(python3 -c 'import sys; print("%d.%d"%sys.version_info[:2])')" == "3.11" ]]; then
-    python3 -m venv "$VENV_DIR"
-  elif command -v apt-get >/dev/null 2>&1; then
-    info "Python 3.11 not found — installing automatically via apt..."
-    $SUDO apt-get update -qq || true
-    $SUDO apt-get install -y -qq software-properties-common || true
-    $SUDO add-apt-repository -y ppa:deadsnakes/ppa || true
-    $SUDO apt-get update -qq || true
-    $SUDO apt-get install -y -qq python3.11 python3.11-venv python3.11-dev || true
-    python3.11 -m venv "$VENV_DIR"
-  else
-    die "Python 3.11 is required. Please install python3.11 & python3.11-venv first."
+  info "Active environment is not Python 3.11. Setting up / switching to Python 3.11 venv at $VENV_DIR"
+
+  # If python3.11 is not installed on the system, install it via apt
+  if ! command -v python3.11 >/dev/null 2>&1; then
+    if command -v apt-get >/dev/null 2>&1; then
+      info "Python 3.11 not found on system — installing automatically via apt..."
+      $SUDO apt-get update -qq || true
+      $SUDO apt-get install -y -qq software-properties-common || true
+      $SUDO add-apt-repository -y ppa:deadsnakes/ppa || true
+      $SUDO apt-get update -qq || true
+      $SUDO apt-get install -y -qq python3.11 python3.11-venv python3.11-dev || true
+    else
+      die "Python 3.11 is required. Please install python3.11 & python3.11-venv first."
+    fi
   fi
+
+  # Check if existing venv is valid Python 3.11
+  if [[ -d "$VENV_DIR" ]] && [[ ! -f "$VENV_DIR/bin/activate" || "$("$VENV_DIR/bin/python" -c 'import sys; print("%d.%d"%sys.version_info[:2])' 2>/dev/null)" != "3.11" ]]; then
+    info "Existing directory at $VENV_DIR is not a valid Python 3.11 venv — recreating..."
+    rm -rf "$VENV_DIR"
+  fi
+
+  if [[ ! -d "$VENV_DIR" ]]; then
+    python3.11 -m venv "$VENV_DIR"
+  fi
+
+  # Unset CONDA_PREFIX to avoid library path conflicts when activating venv
+  export CONDA_PREFIX=""
   # shellcheck source=/dev/null
   source "$VENV_DIR/bin/activate"
 fi
